@@ -18,15 +18,27 @@ vending_machine = {
     }
 }
 
-def calculate(leftover_change):
-    """This takes in the leftover change and converts it to quaters, dimes, nickels, and pennies
+def display_vending_machine(machine: dict) -> None:
+    """The allows the vending machine list to be dynamic.
+
+    Args:
+        machine (dict): dictionary that contains everything in the vending machine
+    """
+    # iterates through dictionary
+    for item_id in machine:
+        item_name = machine[item_id]["name"]
+        item_price = machine[item_id]["price"]
+        print(f"{item_id}. {item_price}$ {item_name}")
+
+def calculate(leftover_change: int) -> tuple:
+    """This takes in the leftover change and converts it to quarters, dimes, nickels, and pennies.
 
     Args:
         leftover_change (int): the leftover change that'll be converted to coins
     """
 
-    # converts to quaters
-    quaters = leftover_change // 25
+    # converts to quarters
+    quarters = leftover_change // 25
     leftover_change %= 25
 
     # converts to dimes
@@ -40,20 +52,16 @@ def calculate(leftover_change):
     # leftover will be pennies
     pennies = leftover_change
 
-    return(quaters, dimes, nickels, pennies)
+    return(quarters, dimes, nickels, pennies)
 
-def main():
+def main() -> None:
 
     # Vending machine welcome
     print("Welcome to the CPP Vending Machine!")
-    print("1. 0.89$ Cookie")
-    print("2. 0.25$ Cigarette")
-    print("3. 0.93$ Mega Candy Bar")
-    print("4. 0.76$ Cup Noodle")
+    display_vending_machine(vending_machine)
 
     # Main loop that runs the input
-    run = True
-    while run:
+    while True:
         # users item that corresponds with the items listed
         user_item = input("\nSelect item (1,2,3,4): ")
 
@@ -64,16 +72,16 @@ def main():
             item_change = round(1 - item_price, 2)
 
             # leftover change is converted to various variables
-            quaters, dimes, nickels, pennies = calculate(int(item_change * 100))
+            quarters, dimes, nickels, pennies = calculate(int(item_change * 100))
 
             # displays the item, cost, and change in exact amount
             print(f"\nItem selected: {item_name}")
             print(f"Item cost: ${item_price}")
             print(f"Change ${item_change}:")
-            print(f"\tQuaters: {quaters}\n\tDimes: {dimes}\n\tnickels: {nickels}\n\tPennies: {pennies}")
+            print(f"\tquarters: {quarters}\n\tDimes: {dimes}\n\tnickels: {nickels}\n\tPennies: {pennies}")
             
             # breaks out of the loop
-            run = False
+            break
 
         except:
             # displays invalid item and will prompt the user to enter a new item
